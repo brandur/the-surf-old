@@ -1,6 +1,5 @@
 TheSurf::Application.routes.draw do
-  match 'articles(.:format)',            :to => 'articles#index'
-  match 'articles/:permalink(.:format)', :to => 'articles#show', :as => :article
+  resources :articles, :only => [ :index, :show, :create, :update, :destroy ]
 
   match 'archive(.:format)', :to => 'articles#archive', :as => :archive
 

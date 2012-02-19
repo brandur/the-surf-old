@@ -1,12 +1,13 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.1'
+gem 'rails',          '3.2.1'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem "jquery-rails",   "~> 2.0.0"
 gem "pg",             "~> 0.13.1"
+gem "redcarpet",      "~> 2.1.0"
 gem "slim",           "~> 1.1.0"
 
 # Gems used only for assets and not required
@@ -18,15 +19,16 @@ group :assets do
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer'
 
-  gem 'uglifier', '>= 1.0.3'
+  gem 'uglifier',     '>= 1.0.3'
 end
 
 group :development, :test do
-  gem "rspec-rails", "~> 2.4"
+  gem "rake",         "~> 0.9.2.2"
+  gem "rspec-rails",  "~> 2.4"
 end
 
 group :production do
-  gem "thin", "~> 1.3.1"
+  gem "thin",         "~> 1.3.1"
 end
 
 # To use ActiveModel has_secure_password

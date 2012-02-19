@@ -14,5 +14,6 @@
 /log/*.log
 /tmp
 
+/rspec
 /test
 .sass-cache
