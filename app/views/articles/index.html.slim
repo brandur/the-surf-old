@@ -1,0 +1,17 @@
+.row
+  .col_6
+    h1 Lorem Ipsum and All its Friends
+    = lorem_ipsum
+    p.secondary
+      | Clean lines and open space. Published February 18th, 2012. #{link_to 'Permalink', ''}.
+  .col_6.last
+    | Pictures
+.row
+  #other_articles.col_6.suf_6.last
+    h2 Other Articles
+    ul
+      - [ "The Importance of a Rashguard", "Swim or Die! Are Sharks as Dangerous as we Think?", "Galapagos on the Cheap" ].each do |t|
+        li
+          p
+            a href=""= t
+          p= lorem_ipsum[0..160]
