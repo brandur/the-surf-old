@@ -18,21 +18,23 @@ html lang='en'
 
     = csrf_meta_tag
 
+    / Enable HTML5 styling for the bane of the Internet
+    /[ if lt IE 9 ]
+      script src="http://html5shim.googlecode.com/svn/trunk/html5.js"
+
     = yield(:head)
 
   body
     #wrapper
       header
         .row
-          #header.col_12.last
+          .col_12.last
             #title
               | the surf 
               span.wave &
-      section#main
-        #content.hyphenate
-          = content_for?(:content) ? yield(:content) : yield
+      = yield
       nav
       footer
         .row
-          #footer.col_12.last
+          .col_12.last
             | Written by #{link_to "Brandur Leach", "http://brandur.org"}. This engine running the Surf is #{link_to "open source", "https://github.com/brandur/the-surf"}.
