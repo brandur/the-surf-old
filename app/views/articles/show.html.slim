@@ -1,3 +1,5 @@
-#content.hyphenate
-  = render partial: "article"
-  = render partial: "other_articles"
+- content_for :title, @article.title
+- if pjax?
+  title= @article.title
+= render partial: "article"
+= render partial: "other_articles"
