@@ -2,7 +2,10 @@ require 'spec_helper'
 
 describe Article do
   def valid_attributes
-    { :title => "About", :slug => "about", :content => "About the Surf." }
+    { title:   "About",
+      slug:    "about",
+      summary: "About the Surf.",
+      content: "About the Surf." }
   end
 
   describe "validations" do
@@ -29,6 +32,11 @@ describe Article do
 
   it "renders content as markdown" do
     Article.new(:content => "**strong text**").content_html.should == 
+      "<p><strong>strong text</strong></p>\n"
+  end
+
+  it "renders summary as markdown" do
+    Article.new(:summary => "**strong text**").summary_html.should == 
       "<p><strong>strong text</strong></p>\n"
   end
 end

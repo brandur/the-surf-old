@@ -1,0 +1,10 @@
+.row
+  .col_6
+    article
+      .article
+        h1= @article.title
+        == @article.content_html
+        p.extra
+          | Published #{@article.created_at.strftime("%B %d, %Y")}. #{link_to 'Permalink', @article, "data-pjax" => "#main"}.
+  .col_6.last
+    | Pictures

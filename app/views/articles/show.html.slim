@@ -1,8 +1,2 @@
-.row
-  .col_6
-    h1= @article.title
-    = @article.content_html
-    p.secondary
-      | Published February 18th, 2012. #{link_to 'Permalink', ''}.
-  .col_6.last
-    | Pictures
+= render partial: "article"
+= render partial: "other_articles"

@@ -25,6 +25,7 @@ end
 group :development, :test do
   gem "rake",         "~> 0.9.2.2"
   gem "rspec-rails",  "~> 2.4"
+  gem "ruby-debug19"
 end
 
 group :production do

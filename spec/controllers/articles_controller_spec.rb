@@ -2,24 +2,33 @@ require 'spec_helper'
 
 describe ArticlesController do
 
-  def valid_attributes
-    { :title => "About", :slug => "about", :content => "About the Surf." }
-  end
-  
-  def valid_session
-    {}
+  HTTP_AUTH_KEY = "pass"
+
+  before do
+    ENV["HTTP_AUTH_KEY"] = HTTP_AUTH_KEY
   end
 
+  def authenticate
+    @request.env['HTTP_AUTHORIZATION'] = encode_credentials("", HTTP_AUTH_KEY)
+  end
+
+  def valid_attributes
+    { title:   "About",
+      slug:    "about",
+      summary: "About the Surf.",
+      content: "About the Surf." }
+  end
+  
   let (:article) do
-    article = mock_model(Article)
-    article.stub(:slug).and_return('about')
-    article
+    mock_model(Article) do |a|
+      a.stub(:slug).and_return("about")
+    end
   end
 
   describe "GET index" do
-    it "assigns all article as @article" do
+    it "assigns the newest article as @article" do
       Article.stub(:ordered).and_return([ article ])
-      get :index, {}, valid_session
+      get :index, {}
       assigns(:article).should == article
     end
   end
@@ -27,68 +36,115 @@ describe ArticlesController do
   describe "GET show" do
     it "assigns the requested article as @article" do
       Article.stub(:find_by_slug!).and_return(article)
-      get :show, {:id => article.to_param}, valid_session
+      get :show, {:id => article.to_param}
       assigns(:article).should == article
     end
   end
 
   describe "POST create" do
-    describe "with valid params" do
-      it "creates a new Article" do
-        expect {
-          post :create, {:article => valid_attributes}, valid_session
-        }.to change(Article, :count).by(1)
-      end
-
-      it "assigns a newly created article as @article" do
-        post :create, {:article => valid_attributes}, valid_session
-        Article.stub(:new).and_return(article)
-        article.stub(:save).and_return(true)
-        assigns(:article).should be_a(Article)
-        assigns(:article).should be_persisted
-      end
+    it "requires authentication" do
+      expect {
+        post :create, {:article => valid_attributes}
+      }.to change(Article, :count).by(0)
+      @response.status.should == 401
     end
 
-    describe "with invalid params" do
-      it "assigns a newly created but unsaved article as @article" do
-        Article.any_instance.stub(:save).and_return(false)
-        post :create, {:article => {}}, valid_session
-        assigns(:article).should be_a_new(Article)
+    describe "authenticated" do
+      before { authenticate }
+
+      describe "with valid params" do
+        it "creates a new article" do
+          expect {
+            post :create, {:article => valid_attributes}
+          }.to change(Article, :count).by(1)
+        end
+
+        it "creates a new article with file push" do
+          expect {
+            post :create, {:attributes => valid_attributes.without(:content).to_s, 
+                           :content => valid_attributes[:content]}
+          }.to change(Article, :count).by(1)
+        end
+
+        it "assigns a newly created article as @article" do
+          post :create, {:article => valid_attributes}
+          Article.stub(:new).and_return(article)
+          article.stub(:save).and_return(true)
+          assigns(:article).should be_a(Article)
+          assigns(:article).should be_persisted
+        end
+      end
+
+      describe "with invalid params" do
+        it "assigns a newly created but unsaved article as @article" do
+          Article.any_instance.stub(:save).and_return(false)
+          post :create, {:article => {}}
+          assigns(:article).should be_a_new(Article)
+        end
       end
     end
   end
 
   describe "PUT update" do
-    describe "with valid params" do
-      it "updates the requested article" do
-        article = Article.create! valid_attributes
-        put :update, {:id => article.to_param, :article => valid_attributes}, valid_session
-      end
-
-      it "assigns the requested article as @article" do
-        Article.stub(:find_by_slug!).and_return(article)
-        article.should_receive(:update_attributes).and_return(true)
-        put :update, {:id => article.to_param, :article => {}}, valid_session
-        assigns(:article).should == article
-      end
+    it "requires authentication" do
+      article = Article.create! valid_attributes
+      put :update, {:id => article.to_param, :article => valid_attributes}
+      @response.status.should == 401
     end
 
-    describe "with invalid params" do
-      it "assigns the article as @article" do
-        Article.stub(:find_by_slug!).and_return(article)
-        article.stub(:update_attributes).and_return(false)
-        put :update, {:id => article.to_param, :article => {}}, valid_session
-        assigns(:article).should == article
+    describe "authenticated" do
+      before { authenticate }
+
+      describe "with valid params" do
+        it "updates the requested article" do
+          article = Article.create! valid_attributes
+          put :update, {:id => article.to_param, :article => valid_attributes}
+        end
+
+        it "updates an article with file push" do
+          article = Article.create! valid_attributes
+          put :update, {:id => article.to_param,
+                        :attributes => valid_attributes.without(:slug, :content).to_s, 
+                        :content => valid_attributes[:content]}
+        end
+
+        it "assigns the requested article as @article" do
+          Article.stub(:find_by_slug!).and_return(article)
+          article.should_receive(:update_attributes).and_return(true)
+          put :update, {:id => article.to_param, :article => {}}
+          assigns(:article).should == article
+        end
+      end
+
+      describe "with invalid params" do
+        it "assigns the article as @article" do
+          Article.stub(:find_by_slug!).and_return(article)
+          article.stub(:update_attributes).and_return(false)
+          put :update, {:id => article.to_param, :article => {}}
+          assigns(:article).should == article
+        end
       end
     end
   end
 
   describe "DELETE destroy" do
-    it "destroys the requested article" do
+    it "requires authentication" do
       article = Article.create! valid_attributes
       expect {
-        delete :destroy, {:id => article.to_param}, valid_session
-      }.to change(Article, :count).by(-1)
+        delete :destroy, {:id => article.to_param}
+      }.to change(Article, :count).by(0)
+      @response.status.should == 401
+    end
+
+    describe "authenticated" do
+      before { authenticate }
+
+      it "destroys the requested article" do
+        article = Article.create! valid_attributes
+        expect {
+          delete :destroy, {:id => article.to_param}
+        }.to change(Article, :count).by(-1)
+      end
     end
   end
 

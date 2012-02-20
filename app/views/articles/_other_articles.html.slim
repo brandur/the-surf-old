@@ -1,0 +1,8 @@
+.row
+  #other_articles.col_6.suf_6.last
+    h2 Other Articles
+    ul
+      - Article.ordered.limit(3).each do |article|
+        li
+          p= link_to article.title, article, "data-pjax" => "#main"
+          p== article.summary_html

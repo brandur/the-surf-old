@@ -1,3 +1,5 @@
+$secondary_color: #aaa
+
 body
   background: #fff
   font-family: 'eb garamond', 'palatino linotype', palatino, 'times new roman', serif
@@ -28,7 +30,7 @@ body
     text-decoration: underline
 
   .secondary
-    color: #aaa
+    color: $secondary_color
 
   .row
     margin: 40px 0
@@ -44,6 +46,12 @@ body
 
   #content
 
+    .article
+
+      .extra
+        color: $secondary_color
+        font-size: 14px
+
     #other_articles
 
       ul
@@ -57,3 +65,12 @@ body
             margin: 10px 0
 
   #footer
+    color: $secondary_color
+    font-size: 14px
+
+    a, a:visited, a:hover
+      color: $secondary_color
+      text-decoration: underline
+
+    a:hover
+      text-decoration: none

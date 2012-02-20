@@ -1,14 +1,24 @@
 class Article < ActiveRecord::Base
   scope :ordered, order('created_at DESC')
-  validates_presence_of :title, :slug, :content
+  validates_presence_of :title, :slug, :content, :summary
 
   def content_html
-    renderer = Redcarpet::Markdown.new(Redcarpet::Render::HTML, 
-      :fenced_code_blocks => true, :hard_wrap => true)
-    renderer.render(content)
+    render_markdown(content)
+  end
+
+  def summary_html
+    render_markdown(summary)
   end
 
   def to_param
     slug
+  end
+
+  private
+
+  def render_markdown(str)
+    renderer = Redcarpet::Markdown.new(Redcarpet::Render::HTML, 
+      :fenced_code_blocks => true, :hard_wrap => true)
+    renderer.render(str)
   end
 end

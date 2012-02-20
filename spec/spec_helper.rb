@@ -32,8 +32,14 @@ RSpec.configure do |config|
 end
 
 class Hash
-  def without(key)
-    delete(key)
+  def without(*keys)
+    keys.each do |key|
+      delete(key)
+    end
     self
   end
+end
+
+def encode_credentials(user, pass)
+  ActionController::HttpAuthentication::Basic.encode_credentials(user, pass)
 end
