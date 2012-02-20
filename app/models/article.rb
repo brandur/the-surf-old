@@ -1,6 +1,7 @@
 class Article < ActiveRecord::Base
   scope :ordered, order('created_at DESC')
   validates_presence_of :title, :slug, :content, :summary
+  validates_uniqueness_of :slug
 
   def content_html
     render_markdown(content)

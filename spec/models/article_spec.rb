@@ -24,6 +24,11 @@ describe Article do
     it "validates presence of :content" do
       Article.new(valid_attributes.without(:content)).valid?.should be_false
     end
+
+    it "validates uniqueness of :slug" do
+      Article.create!(valid_attributes)
+      Article.new(valid_attributes).valid?.should be_false
+    end
   end
 
   it "uses its slug as its parameter" do
