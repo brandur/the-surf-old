@@ -6,6 +6,7 @@ describe "articles" do
       a.stub(:title).and_return("About")
       a.stub(:slug).and_return("about")
       a.stub(:content).and_return("About the Surf.")
+      a.stub(:summary).and_return("About the Surf.")
       a.stub(:created_at).and_return(Time.now)
     end
   end
@@ -13,8 +14,11 @@ describe "articles" do
   describe "GET /articles" do
     it "succeeds" do
       Article.stub(:ordered).and_return stub('set').tap { |s|
+        s.stub(:limit).and_return(s)
+        s.stub(:where).and_return(s)
+
         s.stub(:first).and_return(article)
-        s.stub(:limit).and_return([])
+        s.stub(:each).and_yield(article)
       }
       get articles_path
       response.status.should be(200)
