@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
 
   def authorized?
     authenticate_with_http_basic do |username, password|
-      password == Config.http_auth_key
+      password == App.http_auth_key
     end
   end
 

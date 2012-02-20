@@ -1,4 +1,4 @@
-module Config
+module App
   extend self
 
   def http_auth_key
