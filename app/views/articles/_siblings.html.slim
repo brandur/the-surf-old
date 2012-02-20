@@ -1,0 +1,16 @@
+- prev_article = Article.ordered.where("created_at < ?", @article.created_at).first
+- next_article = Article.ordered.where("created_at > ?", @article.created_at).last
+- if prev_article || next_article
+  #siblings
+    .row
+      #prev.col_3
+        - if prev_article
+          = link_to raw("&larr; #{prev_article.title}"), prev_article, "data-pjax" => "#content"
+        - else
+          | &nbsp;
+      #next.col_3
+        - if next_article
+          = link_to raw("#{next_article.title} &rarr;"), next_article, "data-pjax" => "#content"
+        - else
+          | &nbsp;
+      .col_6.last

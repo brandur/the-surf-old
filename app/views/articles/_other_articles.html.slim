@@ -1,8 +1,9 @@
-.row
-  #other_articles.col_6.suf_6.last
-    h2 Other Articles
-    ul
-      - Article.ordered.limit(3).where("id <> ?", @article.id).each do |article|
-        li
-          p= link_to article.title, article, "data-pjax" => "#content"
-          p== article.summary_html
+#other_articles
+  .row
+    .col_6.suf_6.last
+      h2 Other Articles
+      ul
+        - Article.ordered.limit(3).where("id <> ?", @article.id).each do |article|
+          li
+            p= link_to article.title, article, "data-pjax" => "#content"
+            p== article.summary_html
