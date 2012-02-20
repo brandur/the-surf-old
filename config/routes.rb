@@ -6,6 +6,8 @@ TheSurf::Application.routes.draw do
   match 'atom.xml', :to => 'articles#index', :format => 'atom'
   match 'atom',     :to => 'articles#index', :format => 'atom'
 
+  match ':id', :to => 'articles#show'
+
   root :to => 'articles#index'
 
   # The priority is based upon order of creation:
