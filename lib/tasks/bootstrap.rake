@@ -11,6 +11,7 @@ namespace :bootstrap do
     create_lorem_ipsum_article title: "Ea maxime temporibus itaque tempora",            slug: "ea"
     create_lorem_ipsum_article title: "Iure saepe modi mollitia nostrum",               slug: "iure"
     create_lorem_ipsum_article title: "Incididunt deleniti et molestiae exercitation ", slug: "incididunt"
+    Rails.cache.clear
   end
 end
 
