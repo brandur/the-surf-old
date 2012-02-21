@@ -2,10 +2,11 @@ require 'spec_helper'
 
 describe Article do
   def valid_attributes
-    { title:   "About",
-      slug:    "about",
-      summary: "About the Surf.",
-      content: "About the Surf." }
+    { title:        "About",
+      slug:         "about",
+      summary:      "About the Surf.",
+      content:      "About the Surf.",
+      published_at: Time.now }
   end
 
   describe "validations" do

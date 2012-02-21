@@ -4,6 +4,6 @@
       h1= @article.title
       == @article.content_html
       p.extra
-        | Published #{@article.created_at.strftime("%B %d, %Y")}. #{link_to 'Permalink', @article, "data-pjax" => "#content"}.
+        | Published #{@article.published_at.strftime("%B %d, %Y")}. #{link_to 'Permalink', @article, "data-pjax" => "#content"}.
   .col_6.last
     / Pictures will go here

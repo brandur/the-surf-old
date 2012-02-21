@@ -1,5 +1,5 @@
-- prev_article = Article.ordered.where("created_at < ?", @article.created_at).first
-- next_article = Article.ordered.where("created_at > ?", @article.created_at).last
+- prev_article = Article.ordered.where("published_at < ?", @article.published_at).first
+- next_article = Article.ordered.where("published_at > ?", @article.published_at).last
 - if prev_article || next_article
   #siblings
     .row

@@ -13,10 +13,11 @@ describe ArticlesController do
   end
 
   def valid_attributes
-    { title:   "About",
-      slug:    "about",
-      summary: "About the Surf.",
-      content: "About the Surf." }
+    { title:        "About",
+      slug:         "about",
+      summary:      "About the Surf.",
+      content:      "About the Surf.",
+      published_at: Time.now }
   end
   
   let (:article) do
@@ -61,8 +62,10 @@ describe ArticlesController do
 
         it "creates a new article with file push" do
           expect {
-            post :create, {:attributes => valid_attributes.without(:content).to_s, 
-                           :content => valid_attributes[:content]}
+            attributes = valid_attributes.without(:content)
+            attributes[:published_at] = "Time.parse(#{attributes[:published_at]})"
+            post :create, {:attributes => attributes.to_s, 
+                           :content    => valid_attributes[:content]}
           }.to change(Article, :count).by(1)
         end
 
@@ -103,9 +106,11 @@ describe ArticlesController do
 
         it "updates an article with file push" do
           article = Article.create! valid_attributes
-          put :update, {:id => article.to_param,
-                        :attributes => valid_attributes.without(:slug, :content).to_s, 
-                        :content => valid_attributes[:content]}
+          attributes = valid_attributes.without(:slug, :content)
+          attributes[:published_at] = "Time.parse(#{attributes[:published_at]})"
+          put :update, {:id         => article.to_param,
+                        :attributes => attributes.to_s, 
+                        :content    => valid_attributes[:content]}
         end
 
         it "assigns the requested article as @article" do

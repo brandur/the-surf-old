@@ -16,6 +16,9 @@ end
 
 def create_lorem_ipsum_article(attributes = {})
   content = lorem_ipsum
-  attributes = { summary: content[0..160], content: content }.merge!(attributes)
+  attributes = 
+    { summary: content[0..160],
+      content: content,
+      published_at: Time.now }.merge!(attributes)
   Article.create!(attributes)
 end

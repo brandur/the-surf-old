@@ -7,7 +7,7 @@ describe "articles" do
       a.stub(:slug).and_return("about")
       a.stub(:content).and_return("About the Surf.")
       a.stub(:summary).and_return("About the Surf.")
-      a.stub(:created_at).and_return(Time.now)
+      a.stub(:published_at).and_return(Time.now)
     end
   end
 
@@ -19,6 +19,7 @@ describe "articles" do
 
         s.stub(:first).and_return(article)
         s.stub(:each).and_yield(article)
+        s.stub(:last).and_return(article)
       }
       get articles_path
       response.status.should be(200)
