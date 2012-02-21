@@ -1,5 +1,6 @@
 class ArticlesController < ApplicationController
   before_filter :authorized!, :except => [ :index, :show, :archive ]
+  cache_sweeper :article_sweeper
   caches_action :index, :show, :archive
   
   def index
