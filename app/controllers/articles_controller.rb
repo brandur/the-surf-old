@@ -1,5 +1,6 @@
 class ArticlesController < ApplicationController
   before_filter :authorized!, :except => [ :index, :show, :archive ]
+  caches_action :index, :show, :archive
   
   def index
     respond_to do |format|

@@ -5,6 +5,7 @@ gem 'rails',          '3.2.1'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
+gem "dalli",          "~> 1.1.4"
 gem "jquery-rails",   "~> 2.0.0"
 gem "pg",             "~> 0.13.1"
 gem "redcarpet",      "~> 2.1.0"
