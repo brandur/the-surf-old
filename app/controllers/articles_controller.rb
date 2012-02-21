@@ -1,5 +1,5 @@
 class ArticlesController < ApplicationController
-  before_filter :authorized!, :except => [ :index, :show ]
+  before_filter :authorized!, :except => [ :index, :show, :archive ]
   
   def index
     respond_to do |format|
@@ -15,6 +15,15 @@ class ArticlesController < ApplicationController
     respond_to do |format|
       format.html
       format.json { render json: @article }
+    end
+  end
+
+  def archive
+    @articles = Article.ordered.group_by{ |a| a.published_at.year }.sort.reverse
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @articles }
     end
   end
 

@@ -23,6 +23,7 @@ describe ArticlesController do
   let (:article) do
     mock_model(Article) do |a|
       a.stub(:slug).and_return("about")
+      a.stub(:published_at).and_return(Time.new(2012))
     end
   end
 
@@ -51,6 +52,14 @@ describe ArticlesController do
       Article.stub(:find_by_slug!).and_return(article)
       get :show, {:id => article.to_param}
       assigns(:article).should == article
+    end
+  end
+
+  describe "GET archive" do
+    it "assigns all articles as @articles" do
+      Article.stub(:ordered).and_return([ article ])
+      get :archive, {}
+      assigns(:articles).should == [ [ 2012, [ article ] ] ]
     end
   end
 
