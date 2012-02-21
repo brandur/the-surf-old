@@ -1,7 +1,6 @@
 - if @article
-  - content_for :title, @article.title
   - if pjax?
-    title= @article.title
+    title The Surf
   = render partial: "article"
   = render partial: "siblings"
   = render partial: "other_articles"
