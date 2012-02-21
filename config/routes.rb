@@ -3,9 +3,6 @@ TheSurf::Application.routes.draw do
 
   match 'archive(.:format)', :to => 'articles#archive', :as => :archive
 
-  match 'atom.xml', :to => 'articles#index', :format => 'atom'
-  match 'atom',     :to => 'articles#index', :format => 'atom'
-
   match ':id', :to => 'articles#show'
 
   root :to => 'articles#index'

@@ -27,10 +27,22 @@ describe ArticlesController do
   end
 
   describe "GET index" do
-    it "assigns the newest article as @article" do
-      Article.stub(:ordered).and_return([ article ])
-      get :index, {}
-      assigns(:article).should == article
+    describe "atom format" do
+      it "assigns the newest articles as @articles" do
+        Article.stub(:ordered).and_return stub('set').tap { |s|
+          s.stub(:limit).and_return([ article ])
+        }
+        get :index, {:format => 'atom'}
+        assigns(:articles).should == [ article ]
+      end
+    end
+
+    describe "html format" do
+      it "assigns the newest article as @article" do
+        Article.stub(:ordered).and_return([ article ])
+        get :index, {}
+        assigns(:article).should == article
+      end
     end
   end
 

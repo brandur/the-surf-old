@@ -2,11 +2,10 @@ class ArticlesController < ApplicationController
   before_filter :authorized!, :except => [ :index, :show ]
   
   def index
-    @article = Article.ordered.first
-
     respond_to do |format|
-      format.html 
-      format.json { render json: @article }
+      format.atom { @articles = Article.ordered.limit(20) }
+      format.html { @article = Article.ordered.first }
+      format.json { render json: Article.ordered.limit(20) }
     end
   end
 
