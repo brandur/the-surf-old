@@ -11,4 +11,14 @@ describe "articles/index" do
   it "renders successfully" do
     render
   end
+
+  describe "no articles" do
+    before do
+      @article = nil
+    end
+
+    it "renders successfully with no articles" do
+      render
+    end
+  end
 end
