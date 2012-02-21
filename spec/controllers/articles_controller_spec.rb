@@ -44,6 +44,16 @@ describe ArticlesController do
         get :index, {}
         assigns(:article).should == article
       end
+
+=begin
+      it "performs caching successfully" do
+        perform_caching do
+          Article.stub(:ordered).and_return([ article ])
+          get :index, {}
+          #puts "cache result = " + Rails.cache.read("articles/index.html")
+        end
+      end
+=end
     end
   end
 

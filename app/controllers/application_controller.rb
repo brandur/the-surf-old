@@ -16,8 +16,12 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def pjax?
+    request.headers['X-PJAX'] ? true : false
+  end
+
   def set_layout
-    if request.headers['X-PJAX']
+    if pjax?
       false
     else
       "application"

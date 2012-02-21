@@ -1,7 +1,9 @@
 class ArticlesController < ApplicationController
   before_filter :authorized!, :except => [ :index, :show, :archive ]
   cache_sweeper :article_sweeper
-  caches_action :index, :show, :archive
+  caches_action :index, :show, :archive, :cache_path => Proc.new { |c|
+    "#{c.request.controller}/#{c.request.action}.#{c.request.format}#{c.pjax? ? "/pjax" : ""}"
+  }
   
   def index
     respond_to do |format|

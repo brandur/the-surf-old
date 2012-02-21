@@ -43,3 +43,13 @@ end
 def encode_credentials(user, pass)
   ActionController::HttpAuthentication::Basic.encode_credentials(user, pass)
 end
+
+def perform_caching
+  old_caching = ActionController::Base.perform_caching
+  ActionController::Base.perform_caching = true
+  begin
+    yield
+  ensure
+    ActionController::Base.perform_caching = old_caching
+  end
+end
