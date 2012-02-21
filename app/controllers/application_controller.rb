@@ -14,11 +14,11 @@ class ApplicationController < ActionController::Base
     head(401) unless authorized?
   end
 
-  private
-
   def pjax?
     request.headers['X-PJAX'] ? true : false
   end
+
+  private
 
   def set_layout
     if pjax?
