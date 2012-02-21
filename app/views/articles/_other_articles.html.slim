@@ -7,3 +7,4 @@
           li
             p= link_to article.title, article, "data-pjax" => "#content"
             p== article.summary_html
+      p= link_to "All other articles.", archive_path, "data-pjax" => "#content"
