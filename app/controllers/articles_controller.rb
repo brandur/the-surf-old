@@ -73,9 +73,9 @@ class ArticlesController < ApplicationController
     if params[:attributes] && params[:content]
       attributes = eval(params[:attributes])
       attributes[:content] = params[:content]
-      attributes
     else
-      params[:article]
+      attributes = params[:article]
     end
+    attributes.slice(:title, :slug, :summary, :content, :published_at)
   end
 end
