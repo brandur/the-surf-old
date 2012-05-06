@@ -1,9 +1,7 @@
 .row
-  .col_6
+  .col_12.last
     article
       h1= @article.title
       == @article.content_html
       p.extra
         | Published #{@article.published_at.strftime("%B %d, %Y")}. #{link_to 'Permalink', @article, "data-pjax" => "#content"}.
-  .col_6.last
-    / Pictures will go here
