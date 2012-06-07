@@ -1,11 +1,12 @@
 - if Article.count > 1
   #other_articles
     .row
-      .col_6.suf_6.last
+      .col_12.last
         h2 Other Articles
         ul
           - Article.ordered.limit(3).where("id <> ?", @article.id).each do |article|
             li
               p= link_to article.title, article, "data-pjax" => "#content"
-              p== article.summary_html
-        p= link_to "All other articles.", archive_path, "data-pjax" => "#content"
+              .summary
+                p== article.summary_html
+        p= link_to "All other articles. &rarr;".html_safe, archive_path, "data-pjax" => "#content"
